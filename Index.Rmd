@@ -1,0 +1,102 @@
+---
+title: "Value Chain Prioritization"
+output: html_document
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(plotly)
+```
+
+## Step 1: Impact Assessment Matrix
+
+**Rate expected impact of each intervention (0-100 scale)**
+*100 = Very high impact, 50 = Moderate impact, 0 = No impact*
+
+```{r impact-matrix, echo=FALSE}
+# Load the unified matrix
+unified_matrix <- read_csv("data/interventions_matrix.csv")
+
+# Extract priority weights (first row)
+priority_weights <- unified_matrix %>%
+  filter(type == "weight") %>%
+  select(-type, -intervention, -crop, -description) %>%
+  pivot_longer(everything(), names_to = "objective", values_to = "weight")
+
+# Extract interventions (remaining rows)
+impact_matrix <- unified_matrix %>%
+  filter(type == "intervention") %>%
+  select(-type)
+
+# Calculate weighted scores
+# In the results calculation:
+results <- impact_matrix %>%
+  pivot_longer(cols = -c(intervention, crop, description),  # DYNAMIC
+               names_to = "objective", values_to = "impact_score") %>%
+  left_join(priority_weights, by = "objective") %>%
+  mutate(weighted_impact = impact_score * weight/100) %>%
+  group_by(intervention, crop, description) %>%
+  summarise(
+    total_score = sum(weighted_impact),
+    avg_impact = mean(impact_score),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(total_score))
+```
+
+### Comprehensive Impact Matrix Heatmap
+
+This shows the complete assessment - both the stakeholder priorities (weights) and intervention impacts.
+
+```{r full-heatmap}
+# Prepare data for the complete matrix visualization
+full_heatmap_data <- unified_matrix %>%
+  mutate(label = case_when(
+    type == "weight" ~ "PRIORITY WEIGHTS",
+    type == "intervention" ~ intervention
+  ))
+
+# Get all objective columns dynamically (exclude metadata columns)
+objective_cols <- setdiff(names(full_heatmap_data), 
+                         c("type", "intervention", "crop", "description", "label"))
+
+full_heatmap_data <- full_heatmap_data %>%
+  select(label, all_of(objective_cols)) %>%
+  pivot_longer(cols = -label, names_to = "objective", values_to = "score")
+
+
+ggplot(full_heatmap_data, aes(x = objective, y = factor(label, levels = c("PRIORITY WEIGHTS", unique(full_heatmap_data$label[full_heatmap_data$label != "PRIORITY WEIGHTS"]))), fill = score)) +
+  geom_tile(color = "white", size = 1) +
+  geom_text(aes(label = score), color = "black", size = 4, fontface = "bold") +
+  scale_fill_gradient2(low = "red", mid = "white", high = "darkgreen", 
+                       midpoint = 50, name = "Score/Weight") +
+  labs(title = "Complete Decision Matrix: Priorities & Impacts",
+       subtitle = "Top row shows stakeholder weights, below shows intervention impacts",
+       x = "Objectives", y = "") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(face = "bold"),
+        panel.grid = element_blank())
+```
+
+# Bubble Chart - "Trade-offs & Opportunities"
+
+This chart shows the relationship between nutrition and livelihoods impact. Bubble size represents the total score based on all your priorities.
+
+```{r}
+bubble_data <- impact_matrix %>%
+  left_join(results %>% select(intervention, total_score), by = "intervention")
+
+ggplot(bubble_data, aes(x = livelihoods, y = nutrition, size = total_score, color = crop)) +
+  geom_point(alpha = 0.7) +
+  geom_text(aes(label = str_wrap(intervention, 15)), size = 3, vjust = -1.5) +
+  scale_size_continuous(range = c(3, 10), name = "Total Score") +
+  scale_color_manual(values = c("fonio" = "darkorange", "jute mallow" = "darkgreen", "both" = "steelblue")) +
+  labs(title = "Nutrition vs Livelihoods Impact",
+       subtitle = "Bubble size = overall value (weighted by priorities)",
+       x = "Livelihoods Impact Score", y = "Nutrition Impact Score") +
+  theme_minimal() +
+  xlim(0, 100) + ylim(0, 100)
+```
