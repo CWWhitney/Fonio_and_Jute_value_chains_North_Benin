@@ -16,34 +16,60 @@ library(plotly)
 *100 = Very high impact, 50 = Moderate impact, 0 = No impact*
 
 ```{r impact-matrix, echo=FALSE}
-# Load the unified matrix
+# Load the transposed matrix
 unified_matrix <- read_csv("data/interventions_matrix.csv")
 
-# Extract priority weights (first row)
+# Extract priority weights (first row) and category definitions
 priority_weights <- unified_matrix %>%
   filter(type == "weight") %>%
-  select(-type, -intervention, -crop, -description) %>%
-  pivot_longer(everything(), names_to = "objective", values_to = "weight")
+  select(-type, -objective, -category) %>%
+  pivot_longer(everything(), names_to = "intervention", values_to = "weight")
 
-# Extract interventions (remaining rows)
-impact_matrix <- unified_matrix %>%
-  filter(type == "intervention") %>%
-  select(-type)
+category_definitions <- unified_matrix %>%
+  filter(type == "score") %>%
+  select(objective, category)
+
+# Extract intervention scores (remaining rows)
+score_matrix <- unified_matrix %>%
+  filter(type == "score") %>%
+  select(-type, -category)
 
 # Calculate weighted scores
-# In the results calculation:
-results <- impact_matrix %>%
-  pivot_longer(cols = -c(intervention, crop, description),  # DYNAMIC
-               names_to = "objective", values_to = "impact_score") %>%
-  left_join(priority_weights, by = "objective") %>%
-  mutate(weighted_impact = impact_score * weight/100) %>%
-  group_by(intervention, crop, description) %>%
+# We split all objectives into two buckets:
+# Impact - nutrition, livelihoods, environment, equity, etc.
+# Feasibility - feasibility, lower_market_risk, cost, etc.
+results <- score_matrix %>%
+  pivot_longer(cols = -objective, names_to = "intervention", values_to = "impact_score") %>%
+  left_join(priority_weights, by = "intervention") %>%
+  left_join(category_definitions, by = "objective") %>%
+  # Weighted scores
+  mutate(weighted_impact = impact_score * weight/100) %>% 
+  group_by(intervention, category) %>%
   summarise(
-    total_score = sum(weighted_impact),
-    avg_impact = mean(impact_score),
+    # Aggregate weighted sums
+    category_score = sum(weighted_impact),
     .groups = "drop"
   ) %>%
+  pivot_wider(names_from = category, values_from = category_score) %>%
+  # add impact and feasibility into total_score for bubble size
+  # Composite metric
+  mutate(total_score = impact + feasibility) %>%
   arrange(desc(total_score))
+
+# Prepare data for the complete matrix visualization (transposed version)
+full_heatmap_data <- unified_matrix %>%
+  mutate(label = case_when(
+    type == "weight" ~ "PRIORITY WEIGHTS",
+    type == "score" ~ objective
+  ))
+
+# Get all intervention columns dynamically (exclude metadata columns)
+intervention_cols <- setdiff(names(full_heatmap_data), 
+                         c("type", "objective", "category", "label"))
+
+full_heatmap_data <- full_heatmap_data %>%
+  select(label, all_of(intervention_cols)) %>%
+  pivot_longer(cols = -label, names_to = "intervention", values_to = "score")
 ```
 
 ### Comprehensive Impact Matrix Heatmap
@@ -51,30 +77,18 @@ results <- impact_matrix %>%
 This shows the complete assessment - both the stakeholder priorities (weights) and intervention impacts.
 
 ```{r full-heatmap}
-# Prepare data for the complete matrix visualization
-full_heatmap_data <- unified_matrix %>%
-  mutate(label = case_when(
-    type == "weight" ~ "PRIORITY WEIGHTS",
-    type == "intervention" ~ intervention
-  ))
+# Filter out the priority weights row for the heatmap
+heatmap_display_data <- full_heatmap_data %>%
+  filter(label != "PRIORITY WEIGHTS")
 
-# Get all objective columns dynamically (exclude metadata columns)
-objective_cols <- setdiff(names(full_heatmap_data), 
-                         c("type", "intervention", "crop", "description", "label"))
-
-full_heatmap_data <- full_heatmap_data %>%
-  select(label, all_of(objective_cols)) %>%
-  pivot_longer(cols = -label, names_to = "objective", values_to = "score")
-
-
-ggplot(full_heatmap_data, aes(x = objective, y = factor(label, levels = c("PRIORITY WEIGHTS", unique(full_heatmap_data$label[full_heatmap_data$label != "PRIORITY WEIGHTS"]))), fill = score)) +
+ggplot(heatmap_display_data, aes(x = intervention, y = label, fill = score)) +
   geom_tile(color = "white", size = 1) +
-  geom_text(aes(label = score), color = "black", size = 4, fontface = "bold") +
-  scale_fill_gradient2(low = "red", mid = "white", high = "darkgreen", 
-                       midpoint = 50, name = "Score/Weight") +
-  labs(title = "Complete Decision Matrix: Priorities & Impacts",
-       subtitle = "Top row shows stakeholder weights, below shows intervention impacts",
-       x = "Objectives", y = "") +
+  geom_text(aes(label = score), color = "black", size = 4) +
+  scale_fill_gradient2(low = "white", high = "green", 
+                       midpoint = 50, name = "Score") +
+  labs(title = "Intervention Impact Matrix",
+       subtitle = "Scores show expected impact (0-100) on each objective",
+       x = "Interventions", y = "Objectives") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
         plot.title = element_text(face = "bold"),
@@ -85,18 +99,43 @@ ggplot(full_heatmap_data, aes(x = objective, y = factor(label, levels = c("PRIOR
 
 This chart shows the relationship between nutrition and livelihoods impact. Bubble size represents the total score based on all your priorities.
 
-```{r}
-bubble_data <- impact_matrix %>%
-  left_join(results %>% select(intervention, total_score), by = "intervention")
+```{r bubble_graph}
 
-ggplot(bubble_data, aes(x = livelihoods, y = nutrition, size = total_score, color = crop)) +
-  geom_point(alpha = 0.7) +
-  geom_text(aes(label = str_wrap(intervention, 15)), size = 3, vjust = -1.5) +
+# Clean intervention names for display
+results <- results %>%
+  mutate(intervention_clean = str_replace_all(intervention, "_", " "))
+
+library(ggrepel)
+
+ggplot(results, aes(x = feasibility, y = impact, size = total_score)) +
+  geom_point(alpha = 0.7, color = "steelblue") +
+  geom_text_repel(aes(label = intervention_clean), size = 3, max.overlaps = 20) +
+  # ADD strategic quadrant labels
+  annotate("text", x = 80, y = 20, label = "Easy Wins", color = "red", fontface = "bold") +
+  annotate("text", x = 80, y = 80, label = "Strategic Priorities", color = "darkgreen", fontface = "bold") +
+  annotate("text", x = 20, y = 80, label = "High Effort", color = "orange", fontface = "bold") +
+  annotate("text", x = 20, y = 20, label = "Avoid", color = "grey", fontface = "bold") +
   scale_size_continuous(range = c(3, 10), name = "Total Score") +
-  scale_color_manual(values = c("fonio" = "darkorange", "jute mallow" = "darkgreen", "both" = "steelblue")) +
-  labs(title = "Nutrition vs Livelihoods Impact",
-       subtitle = "Bubble size = overall value (weighted by priorities)",
-       x = "Livelihoods Impact Score", y = "Nutrition Impact Score") +
+  labs(title = "Strategic Investment Map: Impact vs Feasibility",
+       subtitle = "Coordinates show STAKEHOLDER-WEIGHTED aggregates | Size = overall value",
+       x = "Feasibility (Weighted Composite)", y = "Impact (Weighted Composite)") +  # EMPHASIZE!
   theme_minimal() +
   xlim(0, 100) + ylim(0, 100)
+```
+
+# Annex - what drives the scores
+
+```{r scores}
+weight_breakdown <- score_matrix %>%
+  pivot_longer(cols = -objective, names_to = "intervention", values_to = "impact_score") %>%
+  left_join(priority_weights, by = "intervention") %>%
+  left_join(category_definitions, by = "objective") %>%
+  mutate(weighted_impact = impact_score * weight/100)
+
+ggplot(weight_breakdown, aes(x = intervention, y = weighted_impact, fill = objective)) +
+  geom_col() +
+  labs(title = "What Drives Each Intervention's Score?",
+       subtitle = "Breakdown of weighted contributions by objective") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
