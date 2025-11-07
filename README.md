@@ -4,16 +4,9 @@ A simple, interactive tool for prioritizing value chain interventions using Mult
 
 ## How It Works
 
-1. **Edit** the `unified_matrix.csv` spreadsheet during your workshop
-2. **Run** the analysis by opening `bolder_analysis.Rmd` and clicking "Knit"
+1. **Edit** the `data/interventions_matrix.csv` spreadsheet during your workshop
+2. **Run** the analysis by opening `Index.Rmd` and clicking "Knit"
 3. **View** the results with ranked interventions and visual heatmaps
-
-## Setup
-
-1. Open `unified_matrix.csv` in Excel or any spreadsheet program
-2. Edit the data (see below)
-3. Open `bolder_analysis.Rmd` in RStudio
-4. Click the "Knit" button to generate the report
 
 ## Editing the Data
 
@@ -37,7 +30,7 @@ A simple, interactive tool for prioritizing value chain interventions using Mult
 The report provides:
 - **Ranked list** of interventions by total score
 - **Heatmap** showing complete decision matrix
-- **Bubble chart** visualizing trade-offs
+- **Bubble chart** visualizing feasibility and impact (weighted scores of variables in each category)
 - **Key insights** and recommendations
 
 ## Requirements
@@ -47,6 +40,6 @@ The report provides:
 
 ## Tips
 
-- Use 0-100 scale for consistent scoring
+- Use 0-100 scale for consistent scoring (requires a discussion about what '0' and what '100' mean for each variable)
 - Involve stakeholders in both weighting and scoring
 - Re-knit frequently as data changes during workshops

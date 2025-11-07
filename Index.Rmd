@@ -95,9 +95,9 @@ ggplot(heatmap_display_data, aes(x = intervention, y = label, fill = score)) +
         panel.grid = element_blank())
 ```
 
-# Bubble Chart - "Trade-offs & Opportunities"
+# Bubble Chart - "Impact vs Feasibility (Weighted Composite)"
 
-This chart shows the relationship between nutrition and livelihoods impact. Bubble size represents the total score based on all your priorities.
+This chart shows the relationship between impact and feasibility for each intervention option, with a weighted composite average score for each. Bubble size represents the total weighted composite score.
 
 ```{r bubble_graph}
 
