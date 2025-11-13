@@ -102,17 +102,17 @@ library(ggrepel)
 ggplot(results, aes(x = feasibility, y = impact, size = total_score)) +
   geom_point(alpha = 0.7, color = "steelblue") +
   geom_text_repel(aes(label = intervention_clean), size = 3, max.overlaps = 20) +
-  # ADD strategic quadrant labels
-  annotate("text", x = 8, y = 2, label = "Easy Wins", color = "red", fontface = "bold") +
-  annotate("text", x = 8, y = 8, label = "Strategic Priorities", color = "darkgreen", fontface = "bold") +
-  annotate("text", x = 2, y = 8, label = "High Effort", color = "orange", fontface = "bold") +
-  annotate("text", x = 2, y = 2, label = "Avoid", color = "grey", fontface = "bold") +
+  # # ADD strategic quadrant labels
+  # annotate("text", x = 18, y = 2, label = "Easy Wins", color = "red", fontface = "bold") +
+  # annotate("text", x = 18, y = 18, label = "Strategic Priorities", color = "darkgreen", fontface = "bold") +
+  # annotate("text", x = 2, y = 18, label = "High Effort", color = "orange", fontface = "bold") +
+  # annotate("text", x = 2, y = 2, label = "Avoid", color = "grey", fontface = "bold") +
   scale_size_continuous(range = c(3, 10), name = "Total Score") +
   labs(title = "Strategic Investment Map: Impact vs Feasibility",
        subtitle = "Coordinates show STAKEHOLDER-WEIGHTED aggregates | Size = overall value",
        x = "Feasibility (Weighted Composite)", y = "Impact (Weighted Composite)") + 
   theme_minimal() +
-  xlim(0, 10) + ylim(0, 10)
+  xlim(6, 18) + ylim(6, 18)
 ```
 
 # Annex - what drives the scores
