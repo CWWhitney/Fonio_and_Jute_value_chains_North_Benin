@@ -110,7 +110,7 @@ ggplot(results, aes(x = feasibility, y = impact, size = total_score)) +
   scale_size_continuous(range = c(3, 10), name = "Total Score") +
   labs(title = "Strategic Investment Map: Impact vs Feasibility",
        subtitle = "Coordinates show STAKEHOLDER-WEIGHTED aggregates | Size = overall value",
-       x = "Feasibility (Weighted Composite)", y = "Impact (Weighted Composite)") +  # EMPHASIZE!
+       x = "Feasibility (Weighted Composite)", y = "Impact (Weighted Composite)") + 
   theme_minimal() +
   xlim(0, 10) + ylim(0, 10)
 ```
@@ -130,3 +130,4 @@ ggplot(weight_breakdown, aes(x = intervention, y = weighted_impact, fill = objec
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+
