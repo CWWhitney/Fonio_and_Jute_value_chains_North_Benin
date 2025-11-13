@@ -1,0 +1,12 @@
+type,objective,category,weight,Intervention_A,Intervention_B,Intervention_C
+weight,Priority Weights,,,,,
+score,Nutrition & Health,impact,1,8,6,9
+score,Income & Livelihoods,impact,20,7,9,6
+score,Environmental Sustainability,impact,3,6,5,8
+score,Agro-biodiversity Conservation,impact,4,6,5,8
+score,Gender & Social Inclusion,impact,5,5,7,6
+score,Technical Feasibility,feasibility,3,8,7,6
+score,Cost Effectiveness,feasibility,40,6,8,7
+score,Credit Availability,feasibility,20,7,6,8
+score,Community Support,feasibility,2,7,6,8
+score,Policy Alignment,feasibility,2,6,7,8
