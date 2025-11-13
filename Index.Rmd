@@ -4,7 +4,7 @@ output: html_document
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 ---
 
-```{r}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(tidyverse)
 library(plotly)
@@ -14,7 +14,7 @@ Step 1: Impact Assessment Matrix
 Rate expected impact of each intervention (1-10 scale)
 *10 = Very high impact, 5 = Moderate impact, 1 = No impact*
 
-```{r}
+```{r unified_matrix, echo=FALSE}
 # Load the transposed matrix
 unified_matrix <- read_csv("data/interventions_matrix.csv")
 
@@ -67,7 +67,7 @@ Comprehensive Impact Matrix Heatmap
 This shows the complete assessment - both the stakeholder priorities (weights) and intervention impacts.
 
 
-```{r}
+```{r heatmap_display_data, echo=FALSE}
 # Filter out the priority weights row for the heatmap
 heatmap_display_data <- full_heatmap_data %>%
   filter(label != "PRIORITY WEIGHTS") 
@@ -91,7 +91,7 @@ ggplot(heatmap_display_data, aes(x = intervention, y = label, fill = score_displ
 
 This chart shows the relationship between impact and feasibility for each intervention option, with a weighted composite average score for each. Bubble size represents the total weighted composite score.
 
-```{r bubble_graph}
+```{r bubble_graph, echo=FALSE}
 
 # Clean intervention names for display
 results <- results %>%
@@ -117,7 +117,7 @@ ggplot(results, aes(x = feasibility, y = impact, size = total_score)) +
 
 # Annex - what drives the scores
 
-```{r scores}
+```{r scores, echo=FALSE}
 weight_breakdown <- score_matrix %>%
   pivot_longer(cols = -objective, names_to = "intervention", values_to = "impact_score") %>%
   left_join(objective_weights, by = "objective") %>%
