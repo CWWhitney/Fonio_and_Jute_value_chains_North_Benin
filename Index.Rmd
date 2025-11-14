@@ -58,7 +58,6 @@ full_heatmap_data_men_boukoumbe <- full_heatmap_data_men_boukoumbe %>%
   filter(intervention != "weight") %>%
   filter(label != "PRIORITY WEIGHTS") 
 
-
 # Men Natitingou
 
 unified_matrix_fonio_men_natitingou <- read_csv("data/fonio_data/interventions_matrix_men_natitingou.csv")
@@ -149,7 +148,11 @@ This chart shows the relationship between impact and feasibility for each interv
 
 ```{r bubble_graph, echo=FALSE}
 
-unified_matrix = normalized_matrix_fonio_women_natitingou
+unified_matrix = normalized_matrix_fonio_all
+# normalized_matrix_fonio_men_boukoumbe
+# normalized_matrix_fonio_men_natitingou
+# normalized_matrix_fonio_women_boukoumbe
+# normalized_matrix_fonio_women_natitingou
 
 # Extract objective weights and category definitions
 
@@ -192,12 +195,6 @@ ymax <- max(results$impact)
 ggplot(results, aes(x = feasibility, y = impact, size = total_score)) +
   geom_point(alpha = 0.7, color = "steelblue") +
   geom_text_repel(aes(label = intervention_clean), size = 3, max.overlaps = 20) +
-  # # ADD strategic quadrant labels
-  # # Use later for the graphical abstract
-  # annotate("text", x = 18, y = 2, label = "Easy Wins", color = "red", fontface = "bold") +
-  # annotate("text", x = 18, y = 18, label = "Strategic Priorities", color = "darkgreen", fontface = "bold") +
-  # annotate("text", x = 2, y = 18, label = "High Effort", color = "orange", fontface = "bold") +
-  # annotate("text", x = 2, y = 2, label = "Avoid", color = "grey", fontface = "bold") +
   scale_size_continuous(range = c(3, 10), name = "Total Score") +
   labs(title = "Strategic Investment Map: Impact vs Feasibility",
        subtitle = "Coordinates show STAKEHOLDER-WEIGHTED aggregates | Size = overall value",
@@ -206,11 +203,13 @@ ggplot(results, aes(x = feasibility, y = impact, size = total_score)) +
   xlim(xmin, xmax) + ylim(ymin, ymax)
 ```
 
-# Annex - what drives the scores
+# Annex 1 - Comparative score composition
 
 ```{r scores, echo=FALSE}
 weight_breakdown <- score_matrix %>%
-  pivot_longer(cols = -objective, names_to = "intervention", values_to = "impact_score") %>%
+  pivot_longer(cols = -objective, 
+               names_to = "intervention", 
+               values_to = "impact_score") %>%
   left_join(objective_weights, by = "objective") %>%
   mutate(weighted_impact = impact_score * weight/100)
 
@@ -221,5 +220,18 @@ ggplot(weight_breakdown, aes(x = intervention, y = weighted_impact, fill = objec
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+
+# Annex 2 - Comparative investment map 
+
+![](figures/comparative_plot_fonio.png)
+# Annex 3 - Comparative investment map by Gender 
+
+## Fonio in Boukoumbe
+
+![](figures/combined_bubble_plot_fonio_boukoumbe.png)
+
+## Fonio in Natitingou
+
+![](figures/combined_bubble_plot_fonio_natitingou.png)
 
 # References
