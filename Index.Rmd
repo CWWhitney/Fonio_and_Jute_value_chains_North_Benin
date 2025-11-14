@@ -8,6 +8,22 @@ date: "`r format(Sys.Date(), '%B %d, %Y')`"
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(tidyverse)
 library(plotly)
+library(ggrepel)
+
+# Load the transposed matrix
+# unified_matrix <- read_csv("data/interventions_matrix.csv")
+unified_matrix_fonio_all <- read_csv("data/fonio_data/interventions_matrix_all.csv")
+
+unified_matrix_fonio_men_boukoumbe <- read_csv("data/fonio_data/interventions_matrix_men_boukoumbe.csv")
+
+unified_matrix_fonio_men_natitingou <- read_csv("data/fonio_data/interventions_matrix_men_natitingou.csv")
+
+unified_matrix_fonio_women_boukoumbe <- read_csv("data/fonio_data/interventions_matrix_women_boukoumbe.csv")
+
+unified_matrix_fonio_women_natitingou <- read_csv("data/fonio_data/interventions_matrix_women_natitingou.csv")
+
+unified_matrix = unified_matrix_fonio_women_natitingou
+
 ```
 
 Step 1: Impact Assessment Matrix
@@ -15,9 +31,6 @@ Rate expected impact of each intervention (1-10 scale)
 *10 = Very high impact, 5 = Moderate impact, 1 = No impact*
 
 ```{r unified_matrix, echo=FALSE}
-# Load the transposed matrix
-unified_matrix <- read_csv("data/interventions_matrix.csv")
-
 # Extract objective weights and category definitions
 objective_weights <- unified_matrix %>%
   filter(type == "score") %>%
@@ -78,7 +91,7 @@ ggplot(heatmap_display_data, aes(x = intervention, y = label, fill = score_displ
   scale_fill_gradient2(low = "white", high = "green", 
                       midpoint = 5, name = "Score") +
   labs(title = "Intervention Impact Matrix",
-       subtitle = "Scores show expected impact (1-10) on each objective",
+       subtitle = "Scores show expected impact (sum of votes) on each objective",
        x = "Interventions", y = "Objectives") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
@@ -97,7 +110,7 @@ This chart shows the relationship between impact and feasibility for each interv
 results <- results %>%
   mutate(intervention_clean = str_replace_all(intervention, "_", " "))
 
-library(ggrepel)
+# Use ggrepel
 
 xmin <- min(results$feasibility)
 xmax <- max(results$feasibility)
