@@ -9,10 +9,23 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(tidyverse)
 library(plotly)
 library(ggrepel)
+```
 
+Experts identified the interventions and the objectives and then voted on the impact of each. They voted with cards representing three options, 1=low, 2=middle, and 3=high impact. We converted all responses to Percentage of Maximum Possible (POMP) scoring as applied in Participatory Rural Appraisal (PRA), community-based monitoring systems, stakeholder engagement metrics and consensus measurement in deliberative democracy. 
+
+```{r data}
 # Load the transposed matrix
 # unified_matrix <- read_csv("data/interventions_matrix.csv")
 unified_matrix_fonio_all <- read_csv("data/fonio_data/interventions_matrix_all.csv")
+total_participants <- 55
+high_vote_score <- 3
+max_possible_per_intervention <- total_participants * high_vote_score 
+normalized_matrix_fonio_all <- unified_matrix_fonio_all %>%
+  # For score rows only, normalize across intervention columns
+  mutate(across(5:13, 
+                ~ ifelse(type == "score", 
+                        (.x / max_possible_per_intervention) * 10,  # Convert to 1-10 scale
+                        .x)))  # Keep weight rows as-is
 
 unified_matrix_fonio_men_boukoumbe <- read_csv("data/fonio_data/interventions_matrix_men_boukoumbe.csv")
 
@@ -22,8 +35,9 @@ unified_matrix_fonio_women_boukoumbe <- read_csv("data/fonio_data/interventions_
 
 unified_matrix_fonio_women_natitingou <- read_csv("data/fonio_data/interventions_matrix_women_natitingou.csv")
 
-unified_matrix = unified_matrix_fonio_women_natitingou
+unified_matrix = normalized_matrix_fonio_all
 
+# Scores were done with 1-3 votes - people who did not vote could have indicated that they are a '0' no confidence, or a 'na' that they either did not understand or did not agree. So that the total score could potentially range from n to n*3 participants. 
 ```
 
 Step 1: Impact Assessment Matrix
