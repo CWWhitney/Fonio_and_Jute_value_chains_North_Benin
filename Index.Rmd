@@ -22,7 +22,7 @@ high_vote_score <- 3
 max_possible_per_intervention <- total_participants * high_vote_score 
 normalized_matrix_fonio_all <- unified_matrix_fonio_all %>%
   # For score rows only, normalize across intervention columns
-  mutate(across(5:13, 
+  mutate(across(5:13, # the rows that are vote scores
                 ~ ifelse(type == "score", 
                         (.x / max_possible_per_intervention) * 10,  # Convert to 1-10 scale
                         .x)))  # Keep weight rows as-is
