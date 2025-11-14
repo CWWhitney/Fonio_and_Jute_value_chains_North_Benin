@@ -99,6 +99,11 @@ results <- results %>%
 
 library(ggrepel)
 
+xmin <- min(results$feasibility)
+xmax <- max(results$feasibility)
+ymin <- min(results$impact)
+ymax <- max(results$impact)
+
 ggplot(results, aes(x = feasibility, y = impact, size = total_score)) +
   geom_point(alpha = 0.7, color = "steelblue") +
   geom_text_repel(aes(label = intervention_clean), size = 3, max.overlaps = 20) +
@@ -112,7 +117,7 @@ ggplot(results, aes(x = feasibility, y = impact, size = total_score)) +
        subtitle = "Coordinates show STAKEHOLDER-WEIGHTED aggregates | Size = overall value",
        x = "Feasibility (Weighted Composite)", y = "Impact (Weighted Composite)") + 
   theme_minimal() +
-  xlim(6, 18) + ylim(6, 18)
+  xlim(xmin, xmax) + ylim(ymin, ymax)
 ```
 
 # Annex - what drives the scores
