@@ -45,7 +45,7 @@ create_comparative_bubble_plot <- function(matrices_list) {
     facet_wrap(~ group, ncol = 2)  # Small multiples for each group
 }
 
-# Usage with your datasets
+##### Fonio #######
 matrices_list_fonio <- list(
   # "All" = normalized_matrix_fonio_all,
   "Boukoumbe Women" = normalized_matrix_fonio_women_boukoumbe,
@@ -57,5 +57,19 @@ matrices_list_fonio <- list(
 comparative_plot_fonio <- create_comparative_bubble_plot(matrices_list_fonio)
 ggsave(plot = comparative_plot_fonio, 
        filename = "figures/comparative_plot_fonio.png", 
+       width = 20, height = 15, units = "cm")
+
+##### crincrin #######
+matrices_list_crincrin <- list(
+  # "All" = normalized_matrix_fonio_all,
+  "Boukoumbe Women" = normalized_matrix_crincrin_women_boukoumbe,
+  "Boukoumbe Men" = normalized_matrix_crincrin_men_boukoumbe,
+  "Natitingou Women" = normalized_matrix_crincrin_women_natitingou,
+  "Natitingou Men" = normalized_matrix_crincrin_men_natitingou
+)
+
+comparative_plot_crincrin <- create_comparative_bubble_plot(matrices_list_crincrin)
+ggsave(plot = comparative_plot_crincrin, 
+       filename = "figures/comparative_plot_crincrin.png", 
        width = 20, height = 15, units = "cm")
 

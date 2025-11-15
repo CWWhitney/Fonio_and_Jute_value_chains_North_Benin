@@ -70,3 +70,32 @@ combined_bubble_plot_fonio_natitingou <- create_combined_bubble_plot(matrices_li
 ggsave(plot = combined_bubble_plot_fonio_natitingou, 
        filename = "figures/combined_bubble_plot_fonio_natitingou.png", 
        width = 15, height = 10, units = "cm")
+
+
+## crincrin Boukoumbe ##########
+
+matrices_list_crincrin_boukoumbe <- list(
+  # "All" = normalized_matrix_crincrin_all,
+  "Boukoumbe Men" = normalized_matrix_crincrin_men_boukoumbe,
+  "Boukoumbe Women" = normalized_matrix_crincrin_women_boukoumbe
+  # "Men_Natitingou" = normalized_matrix_crincrin_men_natitingou,
+  # "Women_Natitingou" = normalized_matrix_crincrin_women_natitingou
+)
+
+combined_bubble_plot_crincrin_boukoumbe <- create_combined_bubble_plot(matrices_list_crincrin_boukoumbe)
+ggsave(plot = combined_bubble_plot_crincrin_boukoumbe, 
+       filename = "figures/combined_bubble_plot_crincrin_boukoumbe.png", 
+       width = 15, height = 10, units = "cm")
+
+## crincrin Natitingou ##########
+
+matrices_list_crincrin_natitingou <- list(
+  # "All" = normalized_matrix_crincrin_all,
+  "Natitingou Men" = normalized_matrix_crincrin_men_natitingou,
+  "Natitingou Women" = normalized_matrix_crincrin_women_natitingou
+)
+
+combined_bubble_crincrin_natitingou <- create_combined_bubble_plot(matrices_list_crincrin_natitingou)
+ggsave(plot = combined_bubble_plot_crincrin_natitingou, 
+       filename = "figures/combined_bubble_plot_crincrin_natitingou.png", 
+       width = 15, height = 10, units = "cm")

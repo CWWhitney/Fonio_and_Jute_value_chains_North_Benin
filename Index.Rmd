@@ -1,8 +1,0 @@
----
-title: "Value Chain Prioritization"
-output: html_document
-bibliography: bib/refs.bib
----
-
-```{r child="Index_fonio.RMD"}
-```

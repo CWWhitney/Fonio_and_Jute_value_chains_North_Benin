@@ -1,5 +1,5 @@
 ---
-title: "Value Chain Prioritization for Fonio"
+title: "Value Chain Prioritization for Jute Mallow"
 output: html_document
 bibliography: bib/refs.bib
 ---
@@ -16,7 +16,9 @@ library(ggrepel)
 
 ## Impact Assessment 
 
-Interventions and objectives were identified through expert consultation with 55 participants (16 agricultural institutions, 10 Farmers, 9 consumers, 7 processors, 7 traders, 3 transporters, 4 restaurants and 2 import suppliers). The impact assessment conducted via card-based voting (1=low, 2=medium, 3=high impact). We normalized the responses using Percentage of Maximum Possible (POMP) scoring [@cohen1999pomp] to account for participation rates and enable cross-intervention comparison. This approach aligns with established participatory methods in rural development [@chambers1994participatory] and stakeholder engagement metrics [@reed2009stakeholder]. 
+Interventions and objectives were identified through expert consultation with 50 participants (13 producers, 9 traders, 2 transporers, 2 restrarants, 1 processor, 1 microfinancer, 4 consumers, 5 NGOs, 4 administrative authorities, 7 agricultural institutions, 2 import suppliers). The impact assessment conducted via card-based voting (1=low, 2=medium, 3=high impact). We normalized the responses using Percentage of Maximum Possible (POMP) scoring [@cohen1999pomp] to account for participation rates and enable cross-intervention comparison. This approach aligns with established participatory methods in rural development [@chambers1994participatory] and stakeholder engagement metrics [@reed2009stakeholder]. 
+
+The decision modeling team included 13 *(academics, nutritionists, plant breeder, research institutions)*.  
 
 ```{r load_and_adjust_unified_matrix}
 high_vote_score <- 3
@@ -25,36 +27,36 @@ source("R/normalize_intervention_data.R")
 
 source("R/create_full_heatmap_data.R")
 
-######### Fonio ###########
+######### crincrin ###########
 
 # Load the transposed matrix for all
-unified_matrix_fonio_all <- read_csv("data/fonio_data/interventions_matrix_all.csv")
+unified_matrix_crincrin_all <- read_csv("data/crincrin_data/interventions_matrix_all.csv")
 
-normalized_matrix_fonio_all <- normalize_intervention_data(
-  unified_matrix = unified_matrix_fonio_all,
+normalized_matrix_crincrin_all <- normalize_intervention_data(
+  unified_matrix = unified_matrix_crincrin_all,
   total_participants = 55,
   high_vote_score = high_vote_score
 )
 
-full_heatmap_data_fonio <- 
-  create_full_heatmap_data(normalized_matrix_fonio_all)
+full_heatmap_data_crincrin <- 
+  create_full_heatmap_data(normalized_matrix_crincrin_all)
 
-heatmap_data_fonio_all <- full_heatmap_data_fonio %>%
+heatmap_data_crincrin_all <- full_heatmap_data_crincrin %>%
   filter(intervention != "weight") %>%
   filter(label != "PRIORITY WEIGHTS") 
 
 # Men Boukoumbe
 
-unified_matrix_fonio_men_boukoumbe <- read_csv("data/fonio_data/interventions_matrix_men_boukoumbe.csv")
+unified_matrix_crincrin_men_boukoumbe <- read_csv("data/crincrin_data/interventions_matrix_men_boukoumbe.csv")
 
-normalized_matrix_fonio_men_boukoumbe <- normalize_intervention_data(
-  unified_matrix = unified_matrix_fonio_men_boukoumbe,
-  total_participants = 15,
+normalized_matrix_crincrin_men_boukoumbe <- normalize_intervention_data(
+  unified_matrix = unified_matrix_crincrin_men_boukoumbe,
+  total_participants = 14,
   high_vote_score = high_vote_score
 )
 
 full_heatmap_data_men_boukoumbe <- 
-  create_full_heatmap_data(normalized_matrix_fonio_men_boukoumbe)
+  create_full_heatmap_data(normalized_matrix_crincrin_men_boukoumbe)
 
 full_heatmap_data_men_boukoumbe <- full_heatmap_data_men_boukoumbe %>%
   filter(intervention != "weight") %>%
@@ -62,16 +64,16 @@ full_heatmap_data_men_boukoumbe <- full_heatmap_data_men_boukoumbe %>%
 
 # Men Natitingou
 
-unified_matrix_fonio_men_natitingou <- read_csv("data/fonio_data/interventions_matrix_men_natitingou.csv")
+unified_matrix_crincrin_men_natitingou <- read_csv("data/crincrin_data/interventions_matrix_men_natitingou.csv")
 
-normalized_matrix_fonio_men_natitingou <- normalize_intervention_data(
-  unified_matrix = unified_matrix_fonio_men_natitingou,
-  total_participants = 17,
+normalized_matrix_crincrin_men_natitingou <- normalize_intervention_data(
+  unified_matrix = unified_matrix_crincrin_men_natitingou,
+  total_participants = 13,
   high_vote_score = high_vote_score
 )
 
 full_heatmap_data_men_natitingou <- 
-  create_full_heatmap_data(normalized_matrix_fonio_men_natitingou)
+  create_full_heatmap_data(normalized_matrix_crincrin_men_natitingou)
 
 full_heatmap_data_men_natitingou <- full_heatmap_data_men_natitingou %>%
   filter(intervention != "weight") %>%
@@ -79,16 +81,16 @@ full_heatmap_data_men_natitingou <- full_heatmap_data_men_natitingou %>%
 
 # Women Boukoumbe
 
-unified_matrix_fonio_women_boukoumbe <- read_csv("data/fonio_data/interventions_matrix_women_boukoumbe.csv")
+unified_matrix_crincrin_women_boukoumbe <- read_csv("data/crincrin_data/interventions_matrix_women_boukoumbe.csv")
 
-normalized_matrix_fonio_women_boukoumbe <- normalize_intervention_data(
-  unified_matrix = unified_matrix_fonio_women_boukoumbe,
-  total_participants = 10,
+normalized_matrix_crincrin_women_boukoumbe <- normalize_intervention_data(
+  unified_matrix = unified_matrix_crincrin_women_boukoumbe,
+  total_participants = 9,
   high_vote_score = high_vote_score
 )
 
 full_heatmap_data_women_boukoumbe <- 
-  create_full_heatmap_data(normalized_matrix_fonio_women_boukoumbe)
+  create_full_heatmap_data(normalized_matrix_crincrin_women_boukoumbe)
 
 full_heatmap_data_women_boukoumbe <- full_heatmap_data_women_boukoumbe %>%
   filter(intervention != "weight") %>%
@@ -96,16 +98,16 @@ full_heatmap_data_women_boukoumbe <- full_heatmap_data_women_boukoumbe %>%
 
 # Women Natitingou
 
-unified_matrix_fonio_women_natitingou <- read_csv("data/fonio_data/interventions_matrix_women_natitingou.csv")
+unified_matrix_crincrin_women_natitingou <- read_csv("data/crincrin_data/interventions_matrix_women_natitingou.csv")
 
-normalized_matrix_fonio_women_natitingou <- normalize_intervention_data(
-  unified_matrix = unified_matrix_fonio_women_natitingou,
-  total_participants = 13,
+normalized_matrix_crincrin_women_natitingou <- normalize_intervention_data(
+  unified_matrix = unified_matrix_crincrin_women_natitingou,
+  total_participants = 16,
   high_vote_score = high_vote_score
 )
 
 full_heatmap_data_women_natitingou <- 
-  create_full_heatmap_data(normalized_matrix_fonio_women_natitingou)
+  create_full_heatmap_data(normalized_matrix_crincrin_women_natitingou)
 
 full_heatmap_data_women_natitingou <- full_heatmap_data_women_natitingou %>%
   filter(intervention != "weight") %>%
@@ -121,26 +123,26 @@ This shows the complete assessment - both the stakeholder priorities (weights) a
 ```{r plot_heatmaps, echo=FALSE}
 source("R/plot_heatmap.R")
 
-heatmap_fonio_all <- plot_heatmap(heatmap_data_fonio_all)
+heatmap_crincrin_all <- plot_heatmap(heatmap_data_crincrin_all)
 
-heatmap_fonio_women_boukoumbe <- plot_heatmap(full_heatmap_data_women_boukoumbe, high_score_color = "pink")
+heatmap_crincrin_women_boukoumbe <- plot_heatmap(full_heatmap_data_women_boukoumbe, high_score_color = "pink")
 
-heatmap_fonio_women_natitingou <- plot_heatmap(full_heatmap_data_women_natitingou, high_score_color = "pink")
+heatmap_crincrin_women_natitingou <- plot_heatmap(full_heatmap_data_women_natitingou, high_score_color = "pink")
 
-heatmap_fonio_men_boukoumbe <- plot_heatmap(full_heatmap_data_men_boukoumbe, high_score_color = "blue")
+heatmap_crincrin_men_boukoumbe <- plot_heatmap(full_heatmap_data_men_boukoumbe, high_score_color = "blue")
 
-heatmap_fonio_men_natitingou <- plot_heatmap(full_heatmap_data_men_natitingou, high_score_color = "blue")
+heatmap_crincrin_men_natitingou <- plot_heatmap(full_heatmap_data_men_natitingou, high_score_color = "blue")
 
 library(patchwork)
 
 # with titles for each subplot
-heatmap_fonio_all + labs(title = "All Participants") 
+heatmap_crincrin_all + labs(title = "All Participants") 
 
-heatmap_fonio_women_natitingou + labs(title = "Women - Natitingou") 
-heatmap_fonio_men_natitingou + labs(title = "Men - Natitingou") 
+heatmap_crincrin_women_natitingou + labs(title = "Women - Natitingou") 
+heatmap_crincrin_men_natitingou + labs(title = "Men - Natitingou") 
   
-heatmap_fonio_women_boukoumbe + labs(title = "Women - Boukoumbe") 
-heatmap_fonio_men_boukoumbe + labs(title = "Men - Boukoumbe")  
+heatmap_crincrin_women_boukoumbe + labs(title = "Women - Boukoumbe") 
+heatmap_crincrin_men_boukoumbe + labs(title = "Men - Boukoumbe")  
 
 ```
 
@@ -150,11 +152,11 @@ This chart shows the relationship between impact and feasibility for each interv
 
 ```{r bubble_graph, echo=FALSE}
 
-unified_matrix = normalized_matrix_fonio_all
-# normalized_matrix_fonio_men_boukoumbe
-# normalized_matrix_fonio_men_natitingou
-# normalized_matrix_fonio_women_boukoumbe
-# normalized_matrix_fonio_women_natitingou
+unified_matrix = normalized_matrix_crincrin_all
+# normalized_matrix_crincrin_men_boukoumbe
+# normalized_matrix_crincrin_men_natitingou
+# normalized_matrix_crincrin_women_boukoumbe
+# normalized_matrix_crincrin_women_natitingou
 
 # Extract objective weights and category definitions
 
@@ -225,15 +227,15 @@ ggplot(weight_breakdown, aes(x = intervention, y = weighted_impact, fill = objec
 
 # Annex 2 - Comparative investment map 
 
-![](figures/comparative_plot_fonio.png)
+![](figures/comparative_plot_crincrin.png)
 # Annex 3 - Comparative investment map by Gender 
 
-## Fonio in Boukoumbe
+## crincrin in Boukoumbe
 
-![](figures/combined_bubble_plot_fonio_boukoumbe.png)
+![](figures/combined_bubble_plot_crincrin_boukoumbe.png)
 
-## Fonio in Natitingou
+## crincrin in Natitingou
 
-![](figures/combined_bubble_plot_fonio_natitingou.png)
+![](figures/combined_bubble_plot_crincrin_natitingou.png)
 
 # References
