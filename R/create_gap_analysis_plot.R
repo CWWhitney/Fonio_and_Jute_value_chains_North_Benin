@@ -1,5 +1,5 @@
 # Combined Bubble Plot ##########
-# Add interpretaion 
+# Add interpretation 
 # Plots below
 create_gap_analysis_plot <- function(matrices_list) {
   # Process all datasets and combine with group labels

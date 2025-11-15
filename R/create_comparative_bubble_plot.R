@@ -45,11 +45,11 @@ create_comparative_bubble_plot <- function(matrices_list) {
 
 # Usage with your datasets
 matrices_list_fonio <- list(
-  "All" = normalized_matrix_fonio_all,
-  "Men_Boukoumbe" = normalized_matrix_fonio_men_boukoumbe,
-  "Men_Natitingou" = normalized_matrix_fonio_men_natitingou,
-  "Women_Boukoumbe" = normalized_matrix_fonio_women_boukoumbe,
-  "Women_Natitingou" = normalized_matrix_fonio_women_natitingou
+  # "All" = normalized_matrix_fonio_all,
+  "Boukoumbe Women" = normalized_matrix_fonio_women_boukoumbe,
+  "Boukoumbe Men" = normalized_matrix_fonio_men_boukoumbe,
+  "Natitingou Women" = normalized_matrix_fonio_women_natitingou,
+  "Natitingou Men" = normalized_matrix_fonio_men_natitingou
 )
 
 comparative_plot_fonio <- create_comparative_bubble_plot(matrices_list_fonio)
