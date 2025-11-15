@@ -47,8 +47,8 @@ create_combined_bubble_plot <- function(matrices_list) {
 
 matrices_list_fonio_boukoumbe <- list(
   # "All" = normalized_matrix_fonio_all,
-  "Men_Boukoumbe" = normalized_matrix_fonio_men_boukoumbe,
-  "Women_Boukoumbe" = normalized_matrix_fonio_women_boukoumbe
+  "Boukoumbe Men" = normalized_matrix_fonio_men_boukoumbe,
+  "Boukoumbe Women" = normalized_matrix_fonio_women_boukoumbe
   # "Men_Natitingou" = normalized_matrix_fonio_men_natitingou,
   # "Women_Natitingou" = normalized_matrix_fonio_women_natitingou
 )
@@ -56,17 +56,17 @@ matrices_list_fonio_boukoumbe <- list(
 combined_bubble_plot_fonio_boukoumbe <- create_combined_bubble_plot(matrices_list_fonio_boukoumbe)
 ggsave(plot = combined_bubble_plot_fonio_boukoumbe, 
        filename = "figures/combined_bubble_plot_fonio_boukoumbe.png", 
-        width = 25, height = 15, units = "cm")
+        width = 15, height = 10, units = "cm")
 
 ## Fonio Natitingou ##########
 
 matrices_list_fonio_natitingou <- list(
   # "All" = normalized_matrix_fonio_all,
-  "Men_Natitingou" = normalized_matrix_fonio_men_natitingou,
-  "Women_Natitingou" = normalized_matrix_fonio_women_natitingou
+  "Natitingou Men" = normalized_matrix_fonio_men_natitingou,
+  "Natitingou Women" = normalized_matrix_fonio_women_natitingou
 )
 
 combined_bubble_plot_fonio_natitingou <- create_combined_bubble_plot(matrices_list_fonio_natitingou)
 ggsave(plot = combined_bubble_plot_fonio_natitingou, 
        filename = "figures/combined_bubble_plot_fonio_natitingou.png", 
-       width = 25, height = 15, units = "cm")
+       width = 15, height = 10, units = "cm")

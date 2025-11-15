@@ -1,0 +1,8 @@
+type,objective,category,weight,Ameliorer les varietes,Sensibilisation de la population sur les valeurs nutritionnels,Renforcement equipements ,Formateurs acteurs,Plaidoyer gouvernement PNDF,Creation cadre de concertation,Plan d'affaires et finanacement,Mecanisation operations culturales,Actualisation des itk
+weight,Priority Weights,,,,,,,,,,,
+score,Ameliorer le revenu,impact,16,151,163,160,165,150,152,159,163,162
+score,Ameliorer la nutrition,impact,16,136,162,160,157,142,135,145,154,153
+score,Reduire la penibilite,feasibility,16,51,55,165,129,116,97,120,165,149
+score,Equitabilite de la chaine,feasibility,16,65,87,116,95,106,134,101,109,104
+score,Preservation des ressources naturelles,impact,16,85,103,117,143,110,127,100,105,146
+score,Genre et inclusion sociale,feasibility,16,107,98,139,128,143,122,124,140,121

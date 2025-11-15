@@ -1,6 +1,7 @@
 create_comparative_bubble_plot <- function(matrices_list) {
   # Process all datasets and combine with group labels
-  all_results <- map2_dfr(matrices_list, names(matrices_list), function(matrix, group_name) {
+  all_results <- map2_dfr(matrices_list, names(matrices_list), 
+                          function(matrix, group_name) {
     # Extract objective weights and scores
     objective_weights <- matrix %>%
       filter(type == "score") %>%
@@ -12,7 +13,8 @@ create_comparative_bubble_plot <- function(matrices_list) {
     
     # Calculate weighted scores
     results <- score_matrix %>%
-      pivot_longer(cols = -objective, names_to = "intervention", values_to = "score") %>%
+      pivot_longer(cols = -objective, names_to = "intervention", 
+                   values_to = "score") %>%
       left_join(objective_weights, by = "objective") %>%
       mutate(weighted_score = score * weight/100) %>% 
       group_by(intervention, category) %>%
@@ -55,5 +57,5 @@ matrices_list_fonio <- list(
 comparative_plot_fonio <- create_comparative_bubble_plot(matrices_list_fonio)
 ggsave(plot = comparative_plot_fonio, 
        filename = "figures/comparative_plot_fonio.png", 
-       width = 17, height = 22, units = "cm")
+       width = 20, height = 15, units = "cm")
 
