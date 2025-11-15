@@ -18,7 +18,7 @@ library(ggrepel)
 
 Interventions and objectives were identified through expert consultation with 50 participants (13 producers, 9 traders, 2 transporers, 2 restrarants, 1 processor, 1 microfinancer, 4 consumers, 5 NGOs, 4 administrative authorities, 7 agricultural institutions, 2 import suppliers). The impact assessment conducted via card-based voting (1=low, 2=medium, 3=high impact). We normalized the responses using Percentage of Maximum Possible (POMP) scoring [@cohen1999pomp] to account for participation rates and enable cross-intervention comparison. This approach aligns with established participatory methods in rural development [@chambers1994participatory] and stakeholder engagement metrics [@reed2009stakeholder]. 
 
-The decision modeling team included 13 *(academics, nutritionists, plant breeder, research institutions)*.  
+The decision modeling team included 13 *(academics, nutritionists, research institution members)*.  
 
 ```{r load_and_adjust_unified_matrix}
 high_vote_score <- 3
@@ -32,7 +32,7 @@ source("R/create_full_heatmap_data.R")
 # Load the transposed matrix for all
 unified_matrix_crincrin_all <- read_csv("data/crincrin_data/interventions_matrix_all.csv")
 
-normalized_matrix_crincrin_all <- normalize_intervention_data(
+normalized_matrix_crincrin_all <- normalize_intervention_data_crincrin(
   unified_matrix = unified_matrix_crincrin_all,
   total_participants = 55,
   high_vote_score = high_vote_score
@@ -49,7 +49,7 @@ heatmap_data_crincrin_all <- full_heatmap_data_crincrin %>%
 
 unified_matrix_crincrin_men_boukoumbe <- read_csv("data/crincrin_data/interventions_matrix_men_boukoumbe.csv")
 
-normalized_matrix_crincrin_men_boukoumbe <- normalize_intervention_data(
+normalized_matrix_crincrin_men_boukoumbe <- normalize_intervention_data_crincrin(
   unified_matrix = unified_matrix_crincrin_men_boukoumbe,
   total_participants = 14,
   high_vote_score = high_vote_score
@@ -66,7 +66,7 @@ full_heatmap_data_men_boukoumbe <- full_heatmap_data_men_boukoumbe %>%
 
 unified_matrix_crincrin_men_natitingou <- read_csv("data/crincrin_data/interventions_matrix_men_natitingou.csv")
 
-normalized_matrix_crincrin_men_natitingou <- normalize_intervention_data(
+normalized_matrix_crincrin_men_natitingou <- normalize_intervention_data_crincrin(
   unified_matrix = unified_matrix_crincrin_men_natitingou,
   total_participants = 13,
   high_vote_score = high_vote_score
@@ -83,7 +83,7 @@ full_heatmap_data_men_natitingou <- full_heatmap_data_men_natitingou %>%
 
 unified_matrix_crincrin_women_boukoumbe <- read_csv("data/crincrin_data/interventions_matrix_women_boukoumbe.csv")
 
-normalized_matrix_crincrin_women_boukoumbe <- normalize_intervention_data(
+normalized_matrix_crincrin_women_boukoumbe <- normalize_intervention_data_crincrin(
   unified_matrix = unified_matrix_crincrin_women_boukoumbe,
   total_participants = 9,
   high_vote_score = high_vote_score
@@ -100,7 +100,7 @@ full_heatmap_data_women_boukoumbe <- full_heatmap_data_women_boukoumbe %>%
 
 unified_matrix_crincrin_women_natitingou <- read_csv("data/crincrin_data/interventions_matrix_women_natitingou.csv")
 
-normalized_matrix_crincrin_women_natitingou <- normalize_intervention_data(
+normalized_matrix_crincrin_women_natitingou <- normalize_intervention_data_crincrin(
   unified_matrix = unified_matrix_crincrin_women_natitingou,
   total_participants = 16,
   high_vote_score = high_vote_score

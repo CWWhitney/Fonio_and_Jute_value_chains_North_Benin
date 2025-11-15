@@ -14,7 +14,8 @@ create_combined_bubble_plot <- function(matrices_list) {
     
     # Calculate weighted scores
     results <- score_matrix %>%
-      pivot_longer(cols = -objective, names_to = "intervention", values_to = "score") %>%
+      pivot_longer(cols = -objective, names_to = "intervention", 
+                   values_to = "score") %>%
       left_join(objective_weights, by = "objective") %>%
       mutate(weighted_score = score * weight/100) %>% 
       group_by(intervention, category) %>%
