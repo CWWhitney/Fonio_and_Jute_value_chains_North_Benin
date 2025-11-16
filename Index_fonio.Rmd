@@ -16,7 +16,7 @@ library(ggrepel)
 
 ## Impact Assessment 
 
-Interventions and objectives were identified through expert consultation with 55 participants (16 agricultural institutions, 10 Farmers, 9 consumers, 7 processors, 7 traders, 3 transporters, 4 restaurants and 2 import suppliers). The impact assessment conducted via card-based voting (1=low, 2=medium, 3=high impact). We normalized the responses using Percentage of Maximum Possible (POMP) scoring [@cohen1999pomp] to account for participation rates and enable cross-intervention comparison. This approach aligns with established participatory methods in rural development [@chambers1994participatory] and stakeholder engagement metrics [@reed2009stakeholder]. 
+An overview of the impact assessment for the Fonio, *Digitaria exilis* (Kippist) Stapf, value chain. Interventions and objectives were identified through expert consultation with 55 participants (16 agricultural institutions, 10 Farmers, 9 consumers, 7 processors, 7 traders, 3 transporters, 4 restaurants and 2 import suppliers). The impact assessment conducted via card-based voting (1=low, 2=medium, 3=high impact). We normalized the responses using Percentage of Maximum Possible (POMP) scoring [@cohen1999pomp] to account for participation rates and enable cross-intervention comparison. This approach aligns with established participatory methods in rural development [@chambers1994participatory] and stakeholder engagement metrics [@reed2009stakeholder]. 
 
 ```{r load_and_adjust_unified_matrix}
 high_vote_score <- 3
