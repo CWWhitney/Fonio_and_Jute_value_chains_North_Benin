@@ -16,7 +16,7 @@ library(ggrepel)
 
 ## Impact Assessment 
 
-Interventions and objectives were identified through expert consultation with 50 participants (13 producers, 9 traders, 2 transporers, 2 restrarants, 1 processor, 1 microfinancer, 4 consumers, 5 NGOs, 4 administrative authorities, 7 agricultural institutions, 2 import suppliers). The impact assessment conducted via card-based voting (1=low, 2=medium, 3=high impact). We normalized the responses using Percentage of Maximum Possible (POMP) scoring [@cohen1999pomp] to account for participation rates and enable cross-intervention comparison. This approach aligns with established participatory methods in rural development [@chambers1994participatory] and stakeholder engagement metrics [@reed2009stakeholder]. 
+An overiew of the impact assessment for the Jute Mallow, *Corchorus olitorius* L., value chain. Interventions and objectives were identified through expert consultation with 50 participants (13 producers, 9 traders, 2 transporers, 2 restrarants, 1 processor, 1 microfinancer, 4 consumers, 5 NGOs, 4 administrative authorities, 7 agricultural institutions, 2 import suppliers). The impact assessment conducted via card-based voting (1=low, 2=medium, 3=high impact). We normalized the responses using Percentage of Maximum Possible (POMP) scoring [@cohen1999pomp] to account for participation rates and enable cross-intervention comparison. This approach aligns with established participatory methods in rural development [@chambers1994participatory] and stakeholder engagement metrics [@reed2009stakeholder]. 
 
 The decision modeling team included 13 *(academics, nutritionists, research institution members)*.  
 
