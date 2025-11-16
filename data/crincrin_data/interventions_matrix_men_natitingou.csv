@@ -1,4 +1,4 @@
-type,objective,category,weight,Policy awareness,Public awarness,Agroecology,Capacity building,Improved varieties,Business & credit,Infrastructure,Storage
+type,objective,category,weight,Code awareness,Public awarness,Agroecology,Capacity building,Improved varieties,Business & credit,Infrastructure,Storage
 weight,Priority Weights,,,,,,,,,,
 score,Income & livelihoods,impact,16,27,39,39,39,39,39,39,39
 score,Nutrition & health,impact,16,30,39,39,38,39,27,32,39

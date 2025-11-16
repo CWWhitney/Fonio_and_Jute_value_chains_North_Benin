@@ -96,7 +96,7 @@ matrices_list_crincrin_natitingou <- list(
   "Natitingou Women" = normalized_matrix_crincrin_women_natitingou
 )
 
-combined_bubble_crincrin_natitingou <- create_combined_bubble_plot(matrices_list_crincrin_natitingou)
+combined_bubble_plot_crincrin_natitingou <- create_combined_bubble_plot(matrices_list_crincrin_natitingou)
 ggsave(plot = combined_bubble_plot_crincrin_natitingou, 
        filename = "figures/combined_bubble_plot_crincrin_natitingou.png", 
        width = 15, height = 10, units = "cm")
