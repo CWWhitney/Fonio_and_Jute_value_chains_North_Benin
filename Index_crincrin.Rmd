@@ -227,7 +227,7 @@ ggplot(weight_breakdown, aes(x = intervention, y = weighted_impact, fill = objec
 
 # Annex 2 - Comparative investment map 
 
-<!-- Run R/create_comparative_bubble_plot.R -->
+<!-- Run R/create_comparative_bubble_plot.R  -->
 
 ![](figures/comparative_plot_crincrin.png)
 # Annex 3 - Comparative investment map by Gender 
