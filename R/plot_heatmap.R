@@ -8,7 +8,7 @@ plot_heatmap <- function(heatmap_display_data, high_score_color = "green"){
     scale_fill_gradient2(low = "white", high = high_score_color, 
                          midpoint = 5, name = "Score") +
     labs(title = "Intervention Impact Matrix",
-         subtitle = "Scores show expected impact (sum of votes) on each objective",
+         subtitle = "Scores show expected impact on each objective",
          x = "Interventions", y = "Objectives") +
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 45, hjust = 1),

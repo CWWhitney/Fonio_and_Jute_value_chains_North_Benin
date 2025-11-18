@@ -1,8 +1,8 @@
-type,objective,category,weight,Code awareness,Public awarness,Agroecology,Capacity building,Improved varieties,Business & credit,Infrastructure,Storage
+type,objective,category,weight,Code awareness,Public awareness,Agroecology,Capacity building,Improved varieties,Business & credit,Infrastructure,Storage
 weight,Priority Weights,,,,,,,,,,
 score,Income & livelihoods,impact,16,27,28,40,38,30,42,40,40
 score,Nutrition & health,impact,16,18,36,34,37,35,25,28,39
 score,Equity,impact,16,34,18,18,26,25,30,23,31
 score,Ecology,impact,16,40,16,41,37,16,24,34,19
-score,Recduce conflict ,feasibility,16,42,21,15,23,15,24,31,18
+score,Reduce conflict ,feasibility,16,42,21,15,23,15,24,31,18
 score,Stakeholders agency,feasibility,16,30,16,41,24,29,31,29,31

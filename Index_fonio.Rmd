@@ -1,24 +1,10 @@
----
-title: "Value Chain Prioritization for Fonio"
-output: html_document
-bibliography: bib/refs.bib
----
-
-<!-- add yaml subtitle Akkra region in Nattitengu etc.)  -->
-<!-- dates of workshop -->
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
-library(tidyverse)
-library(plotly)
-library(ggrepel)
-```
+## Value Chain Prioritization for Fonio (*Digitaria exilis*)
 
 ## Impact Assessment 
 
-An overview of the impact assessment for the Fonio, *Digitaria exilis* (Kippist) Stapf, value chain. Interventions and objectives were identified through expert consultation with 55 participants (16 agricultural institutions, 10 Farmers, 9 consumers, 7 processors, 7 traders, 3 transporters, 4 restaurants and 2 import suppliers). The impact assessment conducted via card-based voting (1=low, 2=medium, 3=high impact). We normalized the responses using Percentage of Maximum Possible (POMP) scoring [@cohen1999pomp] to account for participation rates and enable cross-intervention comparison. This approach aligns with established participatory methods in rural development [@chambers1994participatory] and stakeholder engagement metrics [@reed2009stakeholder]. 
+An overview of the impact assessment for the Fonio, *Digitaria exilis* (Kippist) Stapf, value chain, for black and white varieties. Interventions and objectives were identified through expert consultation with 55 participants (16 agricultural institutions, 10 Farmers, 9 consumers, 7 processors, 7 traders, 3 transporters, 4 restaurants and 2 import suppliers). 
 
-```{r load_and_adjust_unified_matrix}
+```{r load_and_adjust_unified_matrix_fonio}
 high_vote_score <- 3
 
 source("R/normalize_intervention_data.R")
@@ -118,7 +104,7 @@ Comprehensive Impact Matrix Heatmap
 
 This shows the complete assessment - both the stakeholder priorities (weights) and intervention impacts.
 
-```{r plot_heatmaps, echo=FALSE}
+```{r plot_heatmaps_fonio, echo=FALSE}
 source("R/plot_heatmap.R")
 
 heatmap_fonio_all <- plot_heatmap(heatmap_data_fonio_all)
@@ -144,11 +130,11 @@ heatmap_fonio_men_boukoumbe + labs(title = "Men - Boukoumbe")
 
 ```
 
-# Bubble Chart - "Impact vs Feasibility (Weighted Composite)"
+# Bubble Chart - "Impact vs Feasibility (Weighted Composite)" *D. exilis*
 
 This chart shows the relationship between impact and feasibility for each intervention option, with a weighted composite average score for each. Bubble size represents the total weighted composite score.
 
-```{r bubble_graph, echo=FALSE}
+```{r bubble_graph_fonio, echo=FALSE}
 
 unified_matrix = normalized_matrix_fonio_all
 # normalized_matrix_fonio_men_boukoumbe
@@ -205,9 +191,9 @@ ggplot(results, aes(x = feasibility, y = impact, size = total_score)) +
   xlim(xmin, xmax) + ylim(ymin, ymax)
 ```
 
-# Annex 1 - Comparative score composition
+# Comparative score composition *D. exilis*
 
-```{r scores, echo=FALSE}
+```{r scores_fonio, echo=FALSE}
 weight_breakdown <- score_matrix %>%
   pivot_longer(cols = -objective, 
                names_to = "intervention", 
@@ -223,10 +209,10 @@ ggplot(weight_breakdown, aes(x = intervention, y = weighted_impact, fill = objec
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-# Annex 2 - Comparative investment map 
+# Comparative investment map *D. exilis*
 
 ![](figures/comparative_plot_fonio.png)
-# Annex 3 - Comparative investment map by Gender 
+# Comparative investment map by Gender *D. exilis* 
 
 ## Fonio in Boukoumbe
 
@@ -235,5 +221,3 @@ ggplot(weight_breakdown, aes(x = intervention, y = weighted_impact, fill = objec
 ## Fonio in Natitingou
 
 ![](figures/combined_bubble_plot_fonio_natitingou.png)
-
-# References
