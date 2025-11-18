@@ -136,14 +136,11 @@ This chart shows the relationship between impact and feasibility for each interv
 
 ```{r bubble_graph_fonio, echo=FALSE}
 
+# the median values of the data are the dividers for the quadrants, not the mathematical midpoint of the axis ranges
+
 unified_matrix = normalized_matrix_fonio_all
-# normalized_matrix_fonio_men_boukoumbe
-# normalized_matrix_fonio_men_natitingou
-# normalized_matrix_fonio_women_boukoumbe
-# normalized_matrix_fonio_women_natitingou
 
 # Extract objective weights and category definitions
-
 objective_weights <- unified_matrix %>%
   filter(type == "score") %>%
   select(objective, category, weight)
@@ -158,7 +155,7 @@ results <- score_matrix %>%
   pivot_longer(cols = -objective, 
                names_to = "intervention", 
                values_to = "score") %>%
-  left_join(objective_weights, by = "objective") %>%  # join by 
+  left_join(objective_weights, by = "objective") %>%
   mutate(weighted_score = score * weight/100) %>% 
   group_by(intervention, category) %>%
   summarise(
@@ -173,22 +170,79 @@ results <- score_matrix %>%
 results <- results %>%
   mutate(intervention_clean = str_replace_all(intervention, "_", " "))
 
-# Use ggrepel
-
+# Calculate plot boundaries with some padding
 xmin <- min(results$feasibility)
 xmax <- max(results$feasibility)
 ymin <- min(results$impact)
 ymax <- max(results$impact)
+x_range <- xmax - xmin
+y_range <- ymax - ymin
 
-ggplot(results, aes(x = feasibility, y = impact, size = total_score)) +
-  geom_point(alpha = 0.7, color = "steelblue") +
-  geom_text_repel(aes(label = intervention_clean), size = 3, max.overlaps = 20) +
+# Add padding to boundaries
+xmin_plot <- xmin - 0.05 * x_range
+xmax_plot <- xmax + 0.05 * x_range
+ymin_plot <- ymin - 0.05 * y_range
+ymax_plot <- ymax + 0.05 * y_range
+
+# Calculate quadrant boundaries (using medians as dividers)
+x_median <- median(results$feasibility)
+y_median <- median(results$impact)
+
+# Create quadrant data for background rectangles
+quadrants <- data.frame(
+  xmin = c(xmin_plot, x_median, xmin_plot, x_median),
+  xmax = c(x_median, xmax_plot, x_median, xmax_plot),
+  ymin = c(y_median, y_median, ymin_plot, ymin_plot),
+  ymax = c(ymax_plot, ymax_plot, y_median, y_median),
+  quadrant = c("Upper Left", "Upper Right", "Lower Left", "Lower Right"),
+  fill_color = c("#FFF2CC", "#E1F5FE", "#FCE4EC", "#E8F5E8")
+)
+
+# Create the main plot
+p <- ggplot() +
+  # Add quadrant backgrounds
+  geom_rect(data = quadrants, 
+            aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = fill_color),
+            alpha = 0.3) +
+  # Add points
+  geom_point(data = results, 
+             aes(x = feasibility, y = impact, size = total_score),
+             alpha = 0.7, color = "green") +
+  # Add labels
+  geom_text_repel(data = results,
+                  aes(x = feasibility, y = impact, label = intervention_clean), 
+                  size = 3, max.overlaps = 20) +
+  # Custom fill scale for quadrants
+  scale_fill_identity() +
+  # Size scale for bubbles
   scale_size_continuous(range = c(3, 10), name = "Total Score") +
   labs(title = "Strategic Investment Map: Impact vs Feasibility",
-       subtitle = "Coordinates show STAKEHOLDER-WEIGHTED aggregates | Size = overall value",
+       subtitle = "Coordinates show STAKEHOLDER-ELICITED aggregates | Size = overall value",
        x = "Feasibility (Weighted Composite)", y = "Impact (Weighted Composite)") + 
   theme_minimal() +
-  xlim(xmin, xmax) + ylim(ymin, ymax)
+  xlim(xmin_plot, xmax_plot) + 
+  ylim(ymin_plot, ymax_plot) +
+  # Add quadrant divider lines
+  geom_vline(xintercept = x_median, linetype = "dashed", alpha = 0.5) +
+  geom_hline(yintercept = y_median, linetype = "dashed", alpha = 0.5)
+
+# Create quadrant legend data
+quadrant_legend_data <- data.frame(
+  Meaning = c("Easy & Impactful", "Hard but Impactful", "Easy but Limited", "Hard & Limited"),
+  Color = c("#E1F5FE", "#FFF2CC", "#E8F5E8", "#FCE4EC")
+)
+
+# Create quadrant legend as a table
+quadrant_legend_grob <- tableGrob(quadrant_legend_data[, c("Meaning")], 
+                                 theme = ttheme_minimal(
+                                   core = list(bg_params = list(fill = quadrant_legend_data$Color, alpha = 0.5)),
+                                   colhead = list(bg_params = list(fill = "white"))
+                                 ),
+                                 rows = NULL)
+
+# Combine plot and legend
+grid.arrange(p, quadrant_legend_grob, 
+             ncol = 2, widths = c(3, 1))
 ```
 
 # Comparative score composition *D. exilis*
