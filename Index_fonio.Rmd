@@ -109,9 +109,9 @@ source("R/plot_heatmap.R")
 
 heatmap_fonio_all <- plot_heatmap(heatmap_data_fonio_all)
 
-heatmap_fonio_women_boukoumbe <- plot_heatmap(full_heatmap_data_women_boukoumbe, high_score_color = "pink")
+heatmap_fonio_women_boukoumbe <- plot_heatmap(full_heatmap_data_women_boukoumbe, high_score_color = "#e377c2")
 
-heatmap_fonio_women_natitingou <- plot_heatmap(full_heatmap_data_women_natitingou, high_score_color = "pink")
+heatmap_fonio_women_natitingou <- plot_heatmap(full_heatmap_data_women_natitingou, high_score_color = "#e377c2")
 
 heatmap_fonio_men_boukoumbe <- plot_heatmap(full_heatmap_data_men_boukoumbe, high_score_color = "blue")
 

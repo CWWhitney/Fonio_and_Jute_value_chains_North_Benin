@@ -1,5 +1,4 @@
-# Combined Bubble Plot ##########
-# Plots below
+# Combined Bubble Plot with Quadrants and Gender Colors #######
 create_combined_bubble_plot <- function(matrices_list) {
   # Process all datasets and combine with group labels
   all_results <- map2_dfr(matrices_list, names(matrices_list), function(matrix, group_name) {
@@ -31,38 +30,100 @@ create_combined_bubble_plot <- function(matrices_list) {
     return(results)
   })
   
-  # Create comparative plot
-  ggplot(all_results, aes(x = feasibility, y = impact, size = total_score, color = group)) +
-    geom_point(alpha = 0.6) +
-    geom_text_repel(aes(label = paste(intervention_clean)), 
+  # Create gender column for coloring
+  all_results <- all_results %>%
+    mutate(gender = if_else(str_detect(group, "Women"), "Women", "Men"))
+  
+  # Calculate plot boundaries with padding
+  xmin <- min(all_results$feasibility)
+  xmax <- max(all_results$feasibility)
+  ymin <- min(all_results$impact)
+  ymax <- max(all_results$impact)
+  x_range <- xmax - xmin
+  y_range <- ymax - ymin
+  
+  # Add padding to boundaries
+  xmin_plot <- xmin - 0.05 * x_range
+  xmax_plot <- xmax + 0.05 * x_range
+  ymin_plot <- ymin - 0.05 * y_range
+  ymax_plot <- ymax + 0.05 * y_range
+  
+  # Calculate quadrant boundaries (using medians)
+  x_median <- median(all_results$feasibility)
+  y_median <- median(all_results$impact)
+  
+  # Create quadrant data for background rectangles with descriptive labels
+  quadrants <- data.frame(
+    xmin = c(xmin_plot, x_median, xmin_plot, x_median),
+    xmax = c(x_median, xmax_plot, x_median, xmax_plot),
+    ymin = c(y_median, y_median, ymin_plot, ymin_plot),
+    ymax = c(ymax_plot, ymax_plot, y_median, y_median),
+    quadrant_label = c("Hard but Impactful", "Easy & Impactful", "Hard & Limited", "Easy but Limited"),
+    fill_color = c("#FFF2CC", "#E1F5FE", "#FCE4EC", "#E8F5E8")  # Light yellow, blue, pink, green
+  )
+  
+  # Create the plot with quadrants and gender colors
+  ggplot() +
+    # Add quadrant backgrounds first
+    geom_rect(data = quadrants, 
+              aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = quadrant_label),
+              alpha = 0.3) +
+    # Add quadrant divider lines
+    geom_vline(xintercept = x_median, linetype = "dashed", alpha = 0.5, color = "gray50") +
+    geom_hline(yintercept = y_median, linetype = "dashed", alpha = 0.5, color = "gray50") +
+    # Add points with gender colors
+    geom_point(data = all_results, 
+               aes(x = feasibility, y = impact, size = total_score, color = gender),
+               alpha = 0.7) +
+    # Add text labels
+    geom_text_repel(data = all_results,
+                    aes(x = feasibility, y = impact, label = intervention_clean), 
                     size = 2, max.overlaps = 20, segment.size = 0.1) +
+    # Custom fill scale for quadrants with explicit labels
+    scale_fill_manual(
+      name = "Strategic Quadrants:",
+      values = c(
+        "Hard but Impactful" = "#FFF2CC",
+        "Easy & Impactful" = "#E1F5FE", 
+        "Hard & Limited" = "#FCE4EC",
+        "Easy but Limited" = "#E8F5E8"
+      ),
+      guide = guide_legend(
+        title.position = "top",
+        title.hjust = 0.5,
+        override.aes = list(alpha = 0.5, size = 1)
+      )
+    ) +
+    # Size scale for bubbles
     scale_size_continuous(range = c(2, 8), name = "Total Score") +
-    scale_color_brewer(palette = "Set1", name = "Group") +
+    # Gender colors - blue for men, specific pink for women
+    scale_color_manual(values = c("Men" = "blue", "Women" = "#e377c2"), name = "Gender") +
     labs(title = "Strategic Investment Map: Cross-Group Comparison",
          subtitle = "Each point shows intervention performance by demographic group",
          x = "Feasibility", y = "Impact") +
-    theme_minimal()
+    theme_minimal() +
+    xlim(xmin_plot, xmax_plot) + 
+    ylim(ymin_plot, ymax_plot) +
+    theme(
+      legend.position = "right",
+      legend.box = "vertical",
+      legend.spacing.y = unit(0.2, "cm")
+    )
 }
 
 ## Fonio Boukoumbe ##########
-
 matrices_list_fonio_boukoumbe <- list(
-  # "All" = normalized_matrix_fonio_all,
   "Boukoumbe Men" = normalized_matrix_fonio_men_boukoumbe,
   "Boukoumbe Women" = normalized_matrix_fonio_women_boukoumbe
-  # "Men_Natitingou" = normalized_matrix_fonio_men_natitingou,
-  # "Women_Natitingou" = normalized_matrix_fonio_women_natitingou
 )
 
 combined_bubble_plot_fonio_boukoumbe <- create_combined_bubble_plot(matrices_list_fonio_boukoumbe)
 ggsave(plot = combined_bubble_plot_fonio_boukoumbe, 
        filename = "figures/combined_bubble_plot_fonio_boukoumbe.png", 
-        width = 15, height = 10, units = "cm")
+       width = 15, height = 15, units = "cm")
 
 ## Fonio Natitingou ##########
-
 matrices_list_fonio_natitingou <- list(
-  # "All" = normalized_matrix_fonio_all,
   "Natitingou Men" = normalized_matrix_fonio_men_natitingou,
   "Natitingou Women" = normalized_matrix_fonio_women_natitingou
 )
@@ -70,28 +131,21 @@ matrices_list_fonio_natitingou <- list(
 combined_bubble_plot_fonio_natitingou <- create_combined_bubble_plot(matrices_list_fonio_natitingou)
 ggsave(plot = combined_bubble_plot_fonio_natitingou, 
        filename = "figures/combined_bubble_plot_fonio_natitingou.png", 
-       width = 15, height = 10, units = "cm")
+       width = 15, height = 15, units = "cm")
 
-
-## crincrin Boukoumbe ##########
-
+## Crincrin Boukoumbe ##########
 matrices_list_crincrin_boukoumbe <- list(
-  # "All" = normalized_matrix_crincrin_all,
   "Boukoumbe Men" = normalized_matrix_crincrin_men_boukoumbe,
   "Boukoumbe Women" = normalized_matrix_crincrin_women_boukoumbe
-  # "Men_Natitingou" = normalized_matrix_crincrin_men_natitingou,
-  # "Women_Natitingou" = normalized_matrix_crincrin_women_natitingou
 )
 
 combined_bubble_plot_crincrin_boukoumbe <- create_combined_bubble_plot(matrices_list_crincrin_boukoumbe)
 ggsave(plot = combined_bubble_plot_crincrin_boukoumbe, 
        filename = "figures/combined_bubble_plot_crincrin_boukoumbe.png", 
-       width = 15, height = 10, units = "cm")
+       width = 15, height = 15, units = "cm")
 
-## crincrin Natitingou ##########
-
+## Crincrin Natitingou ##########
 matrices_list_crincrin_natitingou <- list(
-  # "All" = normalized_matrix_crincrin_all,
   "Natitingou Men" = normalized_matrix_crincrin_men_natitingou,
   "Natitingou Women" = normalized_matrix_crincrin_women_natitingou
 )
@@ -99,4 +153,4 @@ matrices_list_crincrin_natitingou <- list(
 combined_bubble_plot_crincrin_natitingou <- create_combined_bubble_plot(matrices_list_crincrin_natitingou)
 ggsave(plot = combined_bubble_plot_crincrin_natitingou, 
        filename = "figures/combined_bubble_plot_crincrin_natitingou.png", 
-       width = 15, height = 10, units = "cm")
+       width = 15, height = 15, units = "cm")
