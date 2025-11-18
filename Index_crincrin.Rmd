@@ -292,10 +292,6 @@ ggplot(weight_breakdown, aes(x = intervention, y = weighted_impact, fill = objec
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-# Comparative investment map *C. olitorius*
-
-<!-- Run R/create_comparative_bubble_plot.R  -->
-
 ![](figures/comparative_plot_crincrin.png)
 # Comparative investment map by Gender *C. olitorius*
 
