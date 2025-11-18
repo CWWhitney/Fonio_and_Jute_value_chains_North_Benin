@@ -2,7 +2,10 @@
 title: "Value Chain Prioritization"
 subtitle: "Expert workshop on Fonio (*Digitaria exilis*) and Jute Mallow (*Corchorus olitorius*) value chains in Northern Benin, November 2025"
 author: Cory Whitney
-output: html_document
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
 bibliography: bib/refs.bib
 ---
 
@@ -18,6 +21,8 @@ library(ggrepel)
 library(grid)
 library(gridExtra)
 ```
+
+# Introduction
 
 As part of an expert workshop in November 2025 we determined potential interventions and objectives for Fonio (*Digitaria exilis*) and Jute Mallow (*Corchorus olitorius*) value chains. We conducted card-based voting (1=low, 2=medium, 3=high impact). We normalized the responses using Percentage of Maximum Possible (POMP) scoring [@cohen1999pomp] to account for participation rates and enable cross-intervention comparison. We chose the approach to simplify the rating of relationships between objectives, aligning with established participatory methods in rural development [@chambers1994participatory] and stakeholder engagement metrics [@reed2009stakeholder]. The work was facilitated by a decision modeling team, including 13 researchers *(3 academics, 3 nutritionists, 7 research institution members)*.  
 

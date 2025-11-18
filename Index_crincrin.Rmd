@@ -1,4 +1,4 @@
-##Value Chain Prioritization for Jute Mallow (*Corchorus olitorius*) 
+# Value Chain Prioritization for Jute Mallow (*Corchorus olitorius*) 
 
 ## Impact Assessment 
 
@@ -151,7 +151,7 @@ heatmap_crincrin_men_boukoumbe + labs(title = "Men - Boukoumbe")
 
 ```
 
-# Bubble Chart - "Impact vs Feasibility (Weighted Composite)" *C. olitorius*
+## Bubble Chart - "Impact vs Feasibility (Weighted Composite)" *C. olitorius*
 
 The next step was to categorize variables into those related to 'impact' and those related to 'feasibility': 
 
@@ -274,7 +274,7 @@ grid.arrange(p, quadrant_legend_grob,
              ncol = 2, widths = c(3, 1))
 ```
 
-# Comparative score composition *C. olitorius*
+## Comparative score composition *C. olitorius*
 
 ```{r scores, echo=FALSE}
 weight_breakdown <- score_matrix %>%
@@ -293,15 +293,15 @@ ggplot(weight_breakdown, aes(x = intervention, y = weighted_impact, fill = objec
 ```
 
 ![](figures/comparative_plot_crincrin.png)
-# Comparative investment map by Gender *C. olitorius*
+## Comparative investment map by Gender *C. olitorius*
 
-## crincrin in Boukoumbe
+### Crincrin in Boukoumbe
 
 <!-- Run R/create_combined_bubble_plot.R -->
 
 ![](figures/combined_bubble_plot_crincrin_boukoumbe.png)
 
-## crincrin in Natitingou
+### Crincrin in Natitingou
 
 ![](figures/combined_bubble_plot_crincrin_natitingou.png)
 

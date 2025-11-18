@@ -1,4 +1,4 @@
-## Value Chain Prioritization for Fonio (*Digitaria exilis*)
+# Value Chain Prioritization for Fonio (*Digitaria exilis*)
 
 ## Impact Assessment 
 
@@ -121,7 +121,7 @@ full_heatmap_data_women_natitingou <- full_heatmap_data_women_natitingou %>%
 # Scores were done with 1-3 votes - people who did not vote could have indicated that they are a '0' no confidence, or a 'na' that they either did not understand or did not agree. So that the total score could potentially range from n to n*3 participants. 
 ```
 
-Comprehensive Impact Matrix Heatmap
+## Comprehensive Impact Matrix Heatmap
 
 This shows the complete assessment - both the stakeholder priorities (weights) and intervention impacts.
 
@@ -151,7 +151,7 @@ heatmap_fonio_men_boukoumbe + labs(title = "Men - Boukoumbe")
 
 ```
 
-# Bubble Chart - "Impact vs Feasibility (Weighted Composite)" *D. exilis*
+## Bubble Chart - "Impact vs Feasibility (Weighted Composite)" *D. exilis*
 
 The next step was to categorize variables into those related to 'impact' and those related to 'feasibility': 
 
@@ -276,7 +276,7 @@ grid.arrange(p, quadrant_legend_grob,
              ncol = 2, widths = c(3, 1))
 ```
 
-# Comparative score composition *D. exilis*
+## Comparative score composition *D. exilis*
 
 ```{r scores_fonio, echo=FALSE}
 weight_breakdown <- score_matrix %>%
@@ -294,12 +294,12 @@ ggplot(weight_breakdown, aes(x = intervention, y = weighted_impact, fill = objec
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-# Comparative investment map by Gender *D. exilis* 
+## Comparative investment map by Gender *D. exilis* 
 
-## Fonio in Boukoumbe
+### Fonio in Boukoumbe
 
 ![](figures/combined_bubble_plot_fonio_boukoumbe.png)
 
-## Fonio in Natitingou
+### Fonio in Natitingou
 
 ![](figures/combined_bubble_plot_fonio_natitingou.png)
