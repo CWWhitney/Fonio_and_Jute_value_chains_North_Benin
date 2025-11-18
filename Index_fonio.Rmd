@@ -2,7 +2,28 @@
 
 ## Impact Assessment 
 
-An overview of the impact assessment for the Fonio, *Digitaria exilis* (Kippist) Stapf, value chain, for black and white varieties. Interventions and objectives were identified through expert consultation with 55 participants (16 agricultural institutions, 10 Farmers, 9 consumers, 7 processors, 7 traders, 3 transporters, 4 restaurants and 2 import suppliers). 
+An overview of the impact assessment for the Fonio, *Digitaria exilis* (Kippist) Stapf, value chain, for black and white varieties. Interventions and objectives were identified through expert consultation with 55 participants (16 agricultural institutions, 10 Farmers, 9 consumers, 7 processors, 7 traders, 3 transporters, 4 restaurants and 2 import suppliers). After a day of discussion the experts agreed on a long list of objectives and interventions and then reduced these to the most important: 
+
+### Interventions Retained / Interventions Retenues
+
+- *Advocacy* - Plaidoyer des acteurs de la filière fonio auprès du gouvernement et des Partenaires Techniques et Financiers (PTF) pour le développement d'un Plan National de Développement de la Filière (PNDF) Fonio
+- *Improved varieties* - Amélioration des variétés
+- *Public awareness* - Sensibilisation de la population sur les valeurs nutritionnelles et thérapeutiques du fonio
+- *Processing equipment* - Renforcement, développement et/ou acquisition des équipements agro-alimentaires
+- *Production training* - Formation des acteurs sur les bonnes pratiques de production du fonio
+- *Exchange* - Création d'un cadre de concertation des acteurs de la chaîne de valeur fonio
+- *Business & credit* - Appui aux acteurs pour l'élaboration de plans d'action et l'accès au financement
+- *Production equipment* - Mécanisation des opérations culturales du fonio
+- *Farm practices* - Actualisation des itinéraires de production et renforcement des capacités techniques
+
+### Associated Objectives / Objectifs Associés
+
+- *Income & livelihood*s - Augmenter la productivité et la production du fonio (améliorer les revenus)
+- *Nutrition & health* - Amener la population à consommer davantage le fonio (améliorer la nutrition)
+- *Production & processing* - Améliorer les équipements de transformation (réduire la pénibilité)
+- *Equity* - Harmoniser les prix au niveau communautaire et national (équité de la chaîne)
+- *Ecology* - Préserver les ressources naturelles (biodiversité, sols, eau, lutte contre l'érosion)
+- *Social Inclusion* - Promouvoir le genre et l'inclusion sociale
 
 ```{r load_and_adjust_unified_matrix_fonio}
 high_vote_score <- 3
@@ -132,7 +153,17 @@ heatmap_fonio_men_boukoumbe + labs(title = "Men - Boukoumbe")
 
 # Bubble Chart - "Impact vs Feasibility (Weighted Composite)" *D. exilis*
 
-This chart shows the relationship between impact and feasibility for each intervention option, with a weighted composite average score for each. Bubble size represents the total weighted composite score.
+The next step was to categorize variables into those related to 'impact' and those related to 'feasibility': 
+
+Impact objectives measure the potential benefits and positive outcomes of interventions:
+- *Income & livelihoods* and Nutrition & health represent core development impacts on wellbeing
+- *Ecology* captures environmental benefits that contribute to long-term sustainability
+
+Feasibility objectives assess practical implementation considerations:
+- *Production & processing* evaluates technical and operational practicality
+- *Equity and Social Inclusion* address social and institutional implementation factors
+
+This chart shows the relationship between impact and feasibility for each intervention option, with a weighted composite average score for each. Bubble size represents the total weighted composite score. 
 
 ```{r bubble_graph_fonio, echo=FALSE}
 

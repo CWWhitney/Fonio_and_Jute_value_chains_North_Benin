@@ -2,7 +2,28 @@
 
 ## Impact Assessment 
 
-An overiew of the impact assessment for the Jute Mallow, *Corchorus olitorius* L., value chain. Interventions and objectives were identified through expert consultation with 50 participants (13 producers, 9 traders, 2 transporters, 2 restaurant owners, 1 processor, 1 micro-financer, 4 consumers, 5 NGOs, 4 administrative authorities, 7 agricultural institutions, 2 import suppliers). 
+An overiew of the impact assessment for the Jute Mallow, *Corchorus olitorius* L., value chain. Interventions and objectives were identified through expert consultation with 50 participants (13 producers, 9 traders, 2 transporters, 2 restaurant owners, 1 processor, 1 micro-financer, 4 consumers, 5 NGOs, 4 administrative authorities, 7 agricultural institutions, 2 import suppliers). After a day and a half of very lively discussion (translated between several local languages and French) the experts agreed on a long list of objectives and interventions and then reduced these to the most important:
+
+### Interventions Retained / Interventions Retenues
+
+- *Code awareness* - Sensibilisation des acteurs (producteurs et éleveurs) sur le code agro-pastorale
+- *Public awareness* - Sensibilisation sur les valeurs nutritionnelles du crincrin
+- *Agroecology* - Promotions de l'agro écologie pour la restauration des sols
+- *Capacity building* - Formation des acteurs de transformations sur les techniques de conservation et transformation des feuilles de crincrin
+- *Improved varieties* - Mise en place d'un système de qualité pour l'obtention du crincrin de qualité
+- *Business & credit* - Formation sur la gestion d'entreprise
+- *Infrastructure* - Mise en place des systèmes d'irrigation
+- *Storage* - Formation des producteurs sur la gestion des ravageurs et de l'eau
+
+### Associated Objectives / Objectifs Associés
+
+- *Income & livelihoods* - Améliorer le revenu
+- *Nutrition & health* - Améliorer la nutrition
+- *Equity* - Equitabilité de la chaîne de valeur
+- *Ecology* - Protection des ressources naturelles
+- *Reduce conflict* - Conflits entre agriculteurs et éleveurs
+- *Stakeholders agency* - Capacité d'exécution des acteurs
+
 
 ```{r load_and_adjust_unified_matrix}
 high_vote_score <- 3
@@ -100,9 +121,9 @@ full_heatmap_data_women_natitingou <- full_heatmap_data_women_natitingou %>%
 # Scores were done with 1-3 votes - people who did not vote could have indicated that they are a '0' no confidence, or a 'na' that they either did not understand or did not agree. So that the total score could potentially range from n to n*3 participants. 
 ```
 
-Comprehensive Impact Matrix Heatmap *C. olitorius*
+## Comprehensive Impact Matrix Heatmap *C. olitorius*
 
-This shows the complete assessment - both the stakeholder priorities (weights) and intervention impacts.
+This shows the complete assessment - both the stakeholder priorities (weights) and intervention impacts. 
 
 ```{r plot_heatmaps, echo=FALSE}
 source("R/plot_heatmap.R")
@@ -132,7 +153,17 @@ heatmap_crincrin_men_boukoumbe + labs(title = "Men - Boukoumbe")
 
 # Bubble Chart - "Impact vs Feasibility (Weighted Composite)" *C. olitorius*
 
-This chart shows the relationship between impact and feasibility for each intervention option, with a weighted composite average score for each. Bubble size represents the total weighted composite score.
+The next step was to categorize variables into those related to 'impact' and those related to 'feasibility': 
+
+Impact objectives measure the direct benefits and development outcomes:
+- *Income & livelihoods*, *Nutrition & health*, and *Equity* represent core wellbeing improvements for communities
+- *Ecology* captures environmental benefits and sustainable resource management
+
+Feasibility objectives assess implementation enablers and constraints:
+- *Reduce conflict* addresses critical social and operational barriers to implementation
+- *Stakeholders agency* evaluates the capacity and readiness of actors to execute interventions
+
+This chart shows the relationship between impact and feasibility for each intervention option, with a weighted composite average score for each. Bubble size represents the total weighted composite score. 
 
 ```{r bubble_graph, echo=FALSE}
 
